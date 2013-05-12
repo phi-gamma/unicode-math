@@ -1430,7 +1430,7 @@ This work is "maintained" by Will Robertson.
 %    \end{macrocode}
 %
 %
-% \section{\Hologo{LuaLaTeX} module}
+% \section{Lua\LaTeX\ module}
 %
 % We create a \pkg{luatexbase} module that contains Lua functions for use with \hologo{LuaLaTeX}.
 %    \begin{macrocode}
@@ -6256,8 +6256,7 @@ end
 % \end{tabular}
 % }
 %
-%
-% \section{\Hologo{XeTeX} math font dimensions}
+% \section{\XeTeX math font dimensions}
 %
 % These are the extended \cmd\fontdimen s available for suitable fonts
 % in \XeTeX. Note that Lua\TeX\ takes an alternative route, and this package
@@ -6428,6 +6427,28 @@ end
 \setcounter{LTchunksize}{100}
 \usepackage[slash-delimiter=frac,nabla=literal]{unicode-math}
 \usepackage{metalogo,hologo}
+\usepackage{xspace}
+
+\def\startmirroring{%
+  \pdfsave\pdfsetmatrix{-1 0 0 1}%
+}
+
+\def\stopmirroring{\pdfrestore}
+
+\def\mirror#1{
+  \begingroup
+  \setbox\@tempboxa\hbox{#1}%
+  \@tempdima\wd\@tempboxa
+  \setbox\@tempboxa\hbox
+      {\startmirroring
+       \hskip-\wd\@tempboxa\box\@tempboxa
+       \stopmirroring}%
+  \wd\@tempboxa\@tempdima
+  \box\@tempboxa
+  \endgroup%
+}
+
+\def\XeTeX{X\lower.5ex\hbox{\kern-.15em\mirror{E}}\kern-.1667em\TeX\xspace}
 
 \fvset{gobble=2,fontsize=\small,xleftmargin=2em}
 %\usepackage[rm,small]{titlesec}
